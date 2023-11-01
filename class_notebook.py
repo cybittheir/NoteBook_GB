@@ -24,8 +24,8 @@ class NoteBook:
             self.records.clear()
             view.Record.count_uid = 0
             for contact in data:
-                last_name, first_name, phone, comment, *_ = contact.strip().split('|')
-                self.records.append(view.Record(last_name, first_name, phone, comment))
+                mess_date, mess_body, tags, comment, *_ = contact.strip().split('|')
+                self.records.append(view.Record(mess_date, mess_body, tags, comment))
 
     def write_file(self, path):
         with open(path, "w", encoding = 'UTF-8') as file:
@@ -39,12 +39,12 @@ class NoteBook:
     def dict_to_str(self, book):
         result=""
         for record in book:
-            result += record.last_name.strip() + "|" + record.first_name.strip() + "|" + record.phone.strip() + "|" + record.comment.strip() + "\n"
+            result += record.mess_date.strip() + "|" + record.mess_body.strip() + "|" + record.tags.strip() + "|" + record.comment.strip() + "\n"
         return result
 
     def add_record(self, new: dict):
         self.records.append(new)
-        view.print_message(view.contact_saved(new.last_name,new.first_name))
+        view.print_message(view.message_saved(new.mess_body,new.mess_date))
 
     def search_record(self, word: str) -> list[dict]:
         result=[]
@@ -55,9 +55,9 @@ class NoteBook:
 
     def search_id(self, word: int) -> list[dict]:
         result=[]
-        for contact in self.records:
-            if word == contact.uid:
-                result.append(contact)
+        for record in self.records:
+            if word == record.uid:
+                result.append(record)
                 break
         return result
 
@@ -66,11 +66,11 @@ class NoteBook:
         for key,field in new.items():
             if field != '':
                 match key:
-                    case "last_name":
-                        self.records[index].last_name = field
-                    case "first_name":
-                        self.records[index].first_name = field
-                    case "phone":
-                        self.records[index].phone = field
+                    case "mess_date":
+                        self.records[index].mess_date = field
+                    case "mess_body":
+                        self.records[index].mess_body = field
+                    case "tags":
+                        self.records[index].tags = field
                     case "comment":
                         self.records[index].comment = field

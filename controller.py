@@ -14,34 +14,34 @@ def start():
         choice = view.menu()
         match choice:
             case 1:
-                message.show_contacts(nb.search_contact(view.input_search(view.search_query)))
+                message.show_records(nb.search_record(view.input_search(view.search_query)))
             case 2:
                 search_index = int(view.input_search_id(view.select_query + view.select_change).strip())
-                old_lname = nb.contacts[search_index].last_name
-                old_fname = nb.contacts[search_index].first_name
+                old_mess = nb.records[search_index].mess_body
+                old_date = nb.records[search_index].mess_date
 
-                message.show_contacts(nb.search_id(search_index))
+                message.show_records(nb.search_id(search_index))
 
-                contact_change = message.input_changes(view.input_change_contact,search_index)
-                nb.change_contact(search_index,contact_change)
+                message_change = message.input_changes(view.input_change_mess,search_index)
+                nb.change_record(search_index,message_change)
  
-                message.show_contacts(nb.search_id(search_index))
-                view.print_message(view.contact_changed(contact_change.get('message') if contact_change.get('message') else old_lname, contact_change.get('first_name') if contact_change.get('first_name') else old_fname))
+                message.show_records(nb.search_id(search_index))
+                view.print_message(view.message_changed(message_change.get('mess_body') if message_change.get('message') else old_mess, message_change.get('mess_date') if message_change.get('mess_date') else old_date))
 
             case 3:
                 search_index=int(view.input_search_id(view.select_query + view.select_delete).strip())
-                old_lname = nb.contacts[search_index].last_name
-                old_fname = nb.contacts[search_index].first_name
+                old_body = nb.records[search_index].mess_body
+                old_date = nb.records[search_index].mess_date
 
-                message.show_contacts(nb.search_id(search_index))
-                nb.contacts.pop(search_index)
+                message.show_records(nb.search_id(search_index))
+                nb.records.pop(search_index)
 
-                view.print_message(view.contact_deleted(old_lname, old_fname))
+                view.print_message(view.message_deleted(old_body, old_date))
             case 4:
                 view.print_title(view.show_all)
-                message.show_contacts(nb.contacts)
+                message.show_records(nb.records)
             case 5:
-                nb.add_contact(message.input_contact(view.input_new_contact))
+                nb.add_record(message.input_message(view.input_new_mess))
             case 6:
                 nb.write_file(nb.db_path)
                 nb.init_base(nb.db_path)

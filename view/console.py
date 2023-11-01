@@ -23,9 +23,9 @@ def input_search_id(message: str) -> str:
     while True:
         choice = input(message)
         clear()
-        if choice.isdigit() and 0 <= int(choice) < view.Contact.count_uid:
+        if choice.isdigit() and 0 <= int(choice) < view.Record.count_uid:
             return choice
-        print (search_id_error + str(view.Contact.count_uid) + '!')
+        print (search_id_error + str(view.Record.count_uid - 1) + '!')
 
 def get_message_width(message: str) -> int:
     mess_list=message.split('\n')

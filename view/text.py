@@ -7,8 +7,8 @@ main_menu='''
 | -> 3. Удалить заметку             |
 | -> 4. Показать все заметки        |
 | -> 5. Создать заметку             |
-| -> 6. Сохранить файл справочника  |
-| -> 7. Перечитать файл справочника |
+| -> 6. Сохранить файл книги        |
+| -> 7. Перечитать файл книги       |
 | -> 0. Выход                       |
 =====================================
 '''
@@ -33,36 +33,36 @@ select_change = "изменения: "
 select_delete = "удаления: "
 
 fields={}
-fields['message']='Введите текст записи: '
+fields['mess_body']='Введите текст записи: '
 fields['mess_date'] = 'Введите дату записи: '
 fields['tags'] = 'Введите ключевые слова: '
 fields['comment'] = 'Введите комментарий: '
 
 fields_name={}
-fields_name['message']='Записка'
+fields_name['mess_body']='Записка'
 fields_name['mess_date']='Дата'
 fields_name['tags']='Тэги'
 fields_name['comment']='Примечание'
 
 fields_size={}
-fields_size['message']=320
-fields_size['mess_date']=20
-fields_size['tags']=53
-fields_size['comment']=220
+fields_size['mess_body']=110
+fields_size['mess_date']=10
+fields_size['tags']=30
+fields_size['comment']=50
 
 show_all = "Все записки"
 
 def open_successful(note_book: list):
     return f'Файл книги успешно прочитан\n{all_records}{len(note_book)}'
 
-def contact_saved(message: str, mess_date: str):
-    return f'Запись {message} {mess_date} добавлена.\nДля сохранения в файл -> 6\nДля отмены -> 7 (Перечитать файл книги)'
+def message_saved(mess_body: str, mess_date: str):
+    return f'Запись {mess_date}: {mess_body} добавлена.\nДля сохранения в файл -> 6\nДля отмены -> 7 (Перечитать файл книги)'
 
-def contact_changed(message: str, mess_date: str):
-    return f'Запись {message} {mess_date} изменена.\nДля сохранения изменений в файл -> 6\nДля отмены -> 7 (Перечитать файл книги)'
+def message_changed(mess_body: str, mess_date: str):
+    return f'Запись {mess_date}: {mess_body} изменена.\nДля сохранения изменений в файл -> 6\nДля отмены -> 7 (Перечитать файл книги)'
 
-def contact_deleted(message: str, mess_date: str):
-    return f'Запись {message} {mess_date} удалена.\nДля сохранения изменений в файл -> 6\nДля отмены -> 7 (Перечитать файл книги)'
+def message_deleted(mess_body: str, mess_date: str):
+    return f'Запись {mess_date}: {mess_body} удалена.\nДля сохранения изменений в файл -> 6\nДля отмены -> 7 (Перечитать файл книги)'
 
-def contact_error(message: str, mess_date: str):
-    return f'Ошибка! Запись {message} от {mess_date} не добавлена в справочник'
+def message_error(mess_body: str, mess_date: str):
+    return f'Ошибка! Запись {mess_body} от {mess_date} не добавлена в справочник'
