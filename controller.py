@@ -6,7 +6,7 @@ import view
 
 def start():
     view.clear()
-    nb = NoteBook('notes.txt')
+    nb = NoteBook('notes.json')
     nb.init_base(nb.db_path)
     message = Record()
 

@@ -1,4 +1,5 @@
 import view
+import json
 from os.path import exists
 
 class NoteBook:
@@ -19,18 +20,23 @@ class NoteBook:
 
     def open_file(self, path):
         with open(path, "r+", encoding = 'UTF-8') as file:
-            data = file.readlines()
+            data = json.load(file)
         if len(data)>0:
             self.records.clear()
             view.Record.count_uid = 0
-            for contact in data:
-                mess_date, mess_body, tags, comment, *_ = contact.strip().split('|')
-                self.records.append(view.Record(mess_date, mess_body, tags, comment))
+            for records in data:
+                mess_date, mess_body, mess_tags, mess_comment, *_ = data[records]
+                date = data[records][mess_date]
+                body =  data[records][mess_body]
+                tags = data[records][mess_tags]
+                comment = data[records][mess_comment]
+                self.records.append(view.Record(date, body, tags, comment))
 
     def write_file(self, path):
         with open(path, "w", encoding = 'UTF-8') as file:
             if len(self.records)>0 :
-                file.write(self.dict_to_str(self.records))
+                print(type(self.rec_to_dict(self.records)))
+                json.dump(self.rec_to_dict(self.records),file,indent=4)
                 view.print_message(view.save_successful)
             else:
                 file.write('')
@@ -40,6 +46,14 @@ class NoteBook:
         result=""
         for record in book:
             result += record.mess_date.strip() + "|" + record.mess_body.strip() + "|" + record.tags.strip() + "|" + record.comment.strip() + "\n"
+        return result
+
+    def rec_to_dict(self,book):
+        result = {}
+        i = 0
+        for record in book:
+            result[i] = {"date": record.mess_date.strip(), "message": record.mess_body.strip(), "tags": record.tags.strip(), "comment": record.comment.strip()}
+            i += 1
         return result
 
     def add_record(self, new: dict):
