@@ -16,6 +16,17 @@ def menu() -> int:
         print (input_error)
         print (main_menu)
 
+def f_menu() -> int:
+    print(file_menu)
+    while True:
+        choice = input(menu_choice)
+        clear()
+        if choice.isdigit() and (7 <= int(choice) <= 8 or int(choice) == 0):
+            return int(choice)
+        print (input_fm_error)
+        print (file_menu)
+
+
 def input_search(message: str) -> str:
     return input(message)
 

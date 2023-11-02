@@ -9,9 +9,13 @@ def start():
     nb = NoteBook('notes.json')
     nb.init_base(nb.db_path)
     message = Record()
+    choice = -1
 
     while True:
-        choice = view.menu()
+        if choice and int(choice) == 3:
+            choice = view.f_menu()
+        else:
+            choice = view.menu()
         match choice:
             case 1:
                 message.show_records(nb.search_record(view.input_search(view.search_query)))
@@ -30,7 +34,7 @@ def start():
 
             case 3:
                 search_index=int(view.input_search_id(view.select_query + view.select_delete).strip())
-                old_body = nb.records[search_index].mess_body
+                old_body = nb.records[search_index].mess_body 
                 old_date = nb.records[search_index].mess_date
 
                 message.show_records(nb.search_id(search_index))
