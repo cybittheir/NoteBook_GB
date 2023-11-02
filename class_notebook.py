@@ -35,7 +35,6 @@ class NoteBook:
     def write_file(self, path):
         with open(path, "w", encoding = 'UTF-8') as file:
             if len(self.records)>0 :
-                print(type(self.rec_to_dict(self.records)))
                 json.dump(self.rec_to_dict(self.records),file,indent=4)
                 view.print_message(view.save_successful)
             else:
@@ -76,7 +75,6 @@ class NoteBook:
         return result
 
     def change_record(self, index: int, new: dict[str,str]):
-        print (new)
         for key,field in new.items():
             if field != '':
                 match key:

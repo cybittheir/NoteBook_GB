@@ -40,12 +40,15 @@ def start():
             case 4:
                 view.print_title(view.show_all)
                 message.show_records(nb.records)
-            case 5:
-                nb.add_record(message.input_message(view.input_new_mess))
+            case 5: # TODO Сортировка по дате
+                view.print_title(view.show_all)
+                message.show_records(nb.records)
             case 6:
+                nb.add_record(message.input_message(view.input_new_mess))
+            case 7:
                 nb.write_file(nb.db_path)
                 nb.init_base(nb.db_path)
-            case 7:
+            case 8:
                 nb.init_base(nb.db_path)
             case 0:
                 view.print_message(view.normal_exit)
