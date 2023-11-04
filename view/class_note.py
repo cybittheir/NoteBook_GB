@@ -1,5 +1,5 @@
 from .text import *
-from .console import print_message
+from .console import print_message,date_to_intstr,str_to_datestr,check_date
 
 class Record:
 
@@ -24,21 +24,29 @@ class Record:
             print(f'| {"ID":>3} | {fields_name["mess_date"]:<{fields_size["mess_date"]}}| {fields_name["mess_body"]:<{fields_size["mess_body"]}}| {fields_name["tags"]:<{fields_size["tags"]}}| {fields_name["comment"]:<{fields_size["comment"]}}|')
             print('='*tab_size)
             for record in book:
-                print(f'| {record.uid:>3} | {record.mess_date:<{fields_size["mess_date"]}}| {record.mess_body:<{fields_size["mess_body"]}}| {record.tags:<{fields_size["tags"]}}| {record.comment:<{fields_size["comment"]}}|')
+                print(f'| {record.uid:>3} | {str_to_datestr(record.mess_date):<{fields_size["mess_date"]}}| {record.mess_body:<{fields_size["mess_body"]}}| {record.tags:<{fields_size["tags"]}}| {record.comment:<{fields_size["comment"]}}|')
             print('='*tab_size)
             print(f'{all_records} {len(book)}')
         else:
             print (book_error)
+
+    def sort_by_date(self,book: list[dict[str,str]]):
+        for record in book:
+            print(f'| {record.uid:>3} | {date_to_intstr(record.mess_date):<{10}}| | {str_to_datestr(date_to_int(record.mess_date)):<{10}}| {record.mess_body:<{fields_size["mess_body"]}}| {record.tags:<{fields_size["tags"]}}| {record.comment:<{fields_size["comment"]}}|')
+            
+#        print (show_records(result))
+        
 
     def input_message(self,message: str) -> dict[str,str]:
         print_message(message)
         today = date.today().strftime("%d/%m/%y")
         right_date = False
         while right_date == False:
-            mess_date = input (fields['mess_date'] + today + ' : ')
-            if mess_date == "":
-                mess_date = today
-            right_date = self.check_date(mess_date)
+            mess_date_in = input (fields['mess_date'] + today + ' : ')
+            if mess_date_in == "":
+                mess_date_in = today
+            right_date = check_date(mess_date_in)
+        mess_date = date_to_intstr(mess_date_in)
         mess_body = ""
         while len(mess_body) == 0:
             mess_body = input (fields['mess_body'])
@@ -50,25 +58,17 @@ class Record:
 
     def input_changes(self,message: str,uid:int) -> dict[str,str]:
         print_message(message)
-        mess_date = input (fields['mess_date'] + "не изменилась:")
+        while right_date == False:
+            mess_date_in = input (fields['mess_date'] + "не изменилась:")
+            if mess_date_in == "":
+                right_date = True
+            else:
+             right_date = check_date(mess_date_in)
+        mess_date = date_to_intstr(mess_date_in)
         mess_body = input (fields['mess_body'])
         tags = input (fields['tags'])
         comment = input (fields['comment'])
         uid = uid
         return {'uid':uid,'mess_date':mess_date, 'mess_body':mess_body, 'tags':tags,'comment':comment}
 
-    def check_date(self,date:str):
-        date_list=date.split('/')
-        if len(date_list) == 3 and date_list[0].isdigit() and date_list[1].isdigit() and date_list[2].isdigit():
-            if (int(date_list[2]) > 0 and int(date_list[2]) < 100 and int(date_list[1]) > 0 and int(date_list[1]) < 13 and int(date_list[0]) > 0 and int(date_list[0]) < 32):
-                if int(date_list[1]) == 2 and (2000 + int(date_list[2]))%4 == 0 and int(date_list[0]) < 30:
-                    return True
-                elif int(date_list[1]) == 2 and (2000 + int(date_list[2]))%4 > 0 and int(date_list[0]) < 29:
-                    return True
-                elif (int(date_list[1]) == 1 or int(date_list[1]) == 3 or int(date_list[1]) == 5 or int(date_list[1]) == 7 or int(date_list[1]) == 8 or int(date_list[1]) == 10 or int(date_list[1]) == 12) and int(date_list[0]) < 31:
-                    return True
-                elif (int(date_list[1]) == 4 or int(date_list[1]) == 6 or int(date_list[1]) == 9 or int(date_list[1]) == 11) and int(date_list[0]) < 31:
-                    return True
-        print ("Ошибка вводы даты. Используйте формат ДД/ММ/ГГ")
-        return False
 

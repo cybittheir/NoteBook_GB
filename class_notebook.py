@@ -61,6 +61,8 @@ class NoteBook:
 
     def search_record(self, word: str) -> list[dict]:
         result=[]
+        if view.check_date(word):
+            word = view.date_to_intstr(word)
         for record in self.records:
             if word.lower().strip() in str(record).lower().strip():
                 result.append(record)

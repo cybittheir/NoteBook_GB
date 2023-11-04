@@ -12,7 +12,7 @@ def start():
     choice = -1
 
     while True:
-        if choice and int(choice) == 3:
+        if choice and (int(choice) == 3 or int(choice) == 6):
             choice = view.f_menu()
         else:
             choice = view.menu()
@@ -45,8 +45,8 @@ def start():
                 view.print_title(view.show_all)
                 message.show_records(nb.records)
             case 5: # TODO Сортировка по дате
-                view.print_title(view.show_all)
-                message.show_records(nb.records)
+                view.print_title(view.sort_dates)
+                message.sort_by_date(nb.records)
             case 6:
                 nb.add_record(message.input_message(view.input_new_mess))
             case 7:

@@ -44,7 +44,7 @@ new_file = "Пустой файл книги успешно создан"
 normal_exit = "Спасибо за использование записной книжки"
 
 all_records = "Всего записей: "
-search_query = "Введите дату записи: "
+search_query = "Введите слово, дату или ID записи: "
 select_query = "Введите ID записи для "
 select_change = "изменения: "
 select_delete = "удаления: "
@@ -68,6 +68,7 @@ fields_size['tags']=30
 fields_size['comment']=50
 
 show_all = "Все записки"
+sort_dates = "Все записи. Сортировка по времени"
 
 def open_successful(note_book: list):
     return f'Файл книги успешно прочитан\nИндексы обновлены!!!\n{all_records}{len(note_book)}'
