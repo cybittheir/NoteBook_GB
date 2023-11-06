@@ -31,6 +31,7 @@ class Record:
             print (book_error)
 
     def sort_by_date(self,book: list[dict[str,str]]):
+        # вариант сделать сортировку в show_records рассматривался (добавление входного параметра и т.д.), но в данном случае пожалел время.
         if book:
             tab_size = int(fields_size["mess_date"]) + int(fields_size["mess_body"]) + int(fields_size["tags"]) + int(fields_size["comment"]) + 15
             print('='*tab_size)
