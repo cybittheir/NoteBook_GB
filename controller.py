@@ -44,7 +44,7 @@ def start():
             case 4:
                 view.print_title(view.show_all)
                 message.show_records(nb.records)
-            case 5: # TODO Сортировка по дате
+            case 5: 
                 view.print_title(view.sort_dates)
                 message.sort_by_date(nb.records)
             case 6:

@@ -31,11 +31,25 @@ class Record:
             print (book_error)
 
     def sort_by_date(self,book: list[dict[str,str]]):
-        for record in book:
-            print(f'| {record.uid:>3} | {date_to_intstr(record.mess_date):<{10}}| | {str_to_datestr(date_to_int(record.mess_date)):<{10}}| {record.mess_body:<{fields_size["mess_body"]}}| {record.tags:<{fields_size["tags"]}}| {record.comment:<{fields_size["comment"]}}|')
-            
-#        print (show_records(result))
-        
+        if book:
+            tab_size = int(fields_size["mess_date"]) + int(fields_size["mess_body"]) + int(fields_size["tags"]) + int(fields_size["comment"]) + 15
+            print('='*tab_size)
+            print(f'| {"ID":>3} | {fields_name["mess_date"]:<{fields_size["mess_date"]}}| {fields_name["mess_body"]:<{fields_size["mess_body"]}}| {fields_name["tags"]:<{fields_size["tags"]}}| {fields_name["comment"]:<{fields_size["comment"]}}|')
+            print('='*tab_size)
+            tmp_book= {}
+            for record in book:
+                old_index = str(record.uid)
+                while len(old_index) < len(str(Record.count_uid)):
+                    old_index = "0" + old_index
+                index = str(record.mess_date) + "." + old_index
+                list_tmp = (f'| {record.uid:>3} | {str_to_datestr(record.mess_date):<{fields_size["mess_date"]}}| {record.mess_body:<{fields_size["mess_body"]}}| {record.tags:<{fields_size["tags"]}}| {record.comment:<{fields_size["comment"]}}|')
+                tmp_book[index] = str(list_tmp)
+            sorted_book = dict(sorted(tmp_book.items()))
+            for rec in sorted_book:
+                print(sorted_book[rec])
+            print('='*tab_size)
+            print(f'{all_records} {len(book)}')
+
 
     def input_message(self,message: str) -> dict[str,str]:
         print_message(message)
